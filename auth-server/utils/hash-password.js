@@ -10,4 +10,5 @@ async function hashData(data,saltRounds=10) {
     }
 }
 
+
 module.exports = hashData;

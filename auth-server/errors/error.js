@@ -1,4 +1,4 @@
 module.exports = error = {
-    statuscode,
-    error
+    statuscode:23,
+    message:"err"
 }
