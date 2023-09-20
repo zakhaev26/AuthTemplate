@@ -1,38 +1,23 @@
 const express = require("express");
-const { default: User } = require("../db/models/user-auth");
-const hashData = require("../utils/hash-password");
-const createNewUser = require("../controllers/createUser");
-const error = require("../errors/error");
 const authenticateUser = require("../controllers/authenticateUser");
 const router = express.Router();
 
 
-router.post("/",async function(req,res){
-
+router.post("/", async function (req, res) {
     try {
-        let {email,password} = req.body;
+        let { email, password } = req.body;
         email = email.trim();
         password = password.trim();
 
-        if(!(email&&password)) {
-            error.statuscode = 404;
-            error.message = "Empty Credentials!"
-            res.status(404).json(error);
+        if (!(email && password)) {
+            throw new Error("Undefined States!")
         }
-        const fetchedUser = await authenticateUser({
-            email,password
-        });
 
-        if(fetchedUser.statuscode!==404) {
-            console.log("JII")
-            console.log(fetchedUser);
-            res.status(200).json(fetchedUser);
-        }
-        else {
-            res.status(fetchedUser.statuscode).json(fetchedUser)
-        }
-    } catch (error) {
+        const authenticatedUser = await authenticateUser({email,password});
         
+        res.status(200).json(authenticatedUser);
+    } catch (error) {
+        res.json(404).json(error.message);
     }
 })
 

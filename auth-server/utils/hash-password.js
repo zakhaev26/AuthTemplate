@@ -10,5 +10,14 @@ async function hashData(data,saltRounds=10) {
     }
 }
 
+async function verifyHashedData(unhashed,hashed) {
 
-module.exports = hashData;
+    try {
+        const match = await bcrypt.compare(unhashed,hashed);
+        return match;
+    } catch(e) {
+        throw new Error(e.message);
+    }
+}
+
+module.exports = {hashData,verifyHashedData};

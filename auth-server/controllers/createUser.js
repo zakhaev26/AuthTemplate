@@ -4,30 +4,21 @@ const hashData = require("../utils/hash-password");
 async function createNewUser(data) {
     try {
         const { name, email, password } = data;
-        const hpassword = await hashData(password);
-        console.log("pass:",hpassword)
         const existing_user = await User.findOne({email});
         if (existing_user){
-            return {
-                "status":404,
-                "error":"User Exists"
-            }
+            throw new Error("User Exists!");
         }
         else {
+            const hashedPassword = await hashData(password);
             const newUser = new User({
                 name,
                 email,
-                password:hpassword
+                password:hashedPassword
             });
-
-            const createdUser = await newUser.save(newUser);
-            return createdUser;
+            
         }
     } catch (err) {
-            return {
-                "status":404,
-                "error":`${err.message}`
-            }
+        throw new Error(err.message);
     }
 }
 
