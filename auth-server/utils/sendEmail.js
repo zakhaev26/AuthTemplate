@@ -7,7 +7,6 @@ let transporter = nodemailer.createTransport({
         pass:process.env.AUTH_PASSWORD,
     },
 })
-console.log(process.env.AUTH_PASSWORD)
 //test transporter
 
 transporter.verify((err,success)=> {

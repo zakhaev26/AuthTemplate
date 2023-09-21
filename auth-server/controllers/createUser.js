@@ -1,11 +1,11 @@
 const User = require("../db/models/user-auth");
-const hashData = require("../utils/hash-password");
+const { hashData } = require("../utils/hash-password");
 
 async function createNewUser(data) {
     try {
         const { name, email, password } = data;
-        const existing_user = await User.findOne({email});
-        if (existing_user){
+        const existing_user = await User.findOne({ email });
+        if (existing_user) {
             throw new Error("User Exists!");
         }
         else {
@@ -13,9 +13,10 @@ async function createNewUser(data) {
             const newUser = new User({
                 name,
                 email,
-                password:hashedPassword
+                password: hashedPassword
             });
-            
+            const user = await newUser.save();
+            return user
         }
     } catch (err) {
         throw new Error(err.message);

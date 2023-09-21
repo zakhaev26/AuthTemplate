@@ -6,11 +6,9 @@ const createToken = require("../utils/createToken")
 async function authenticateUser(data) {
     try {
         const {email,password} = data;
-
         const fetchedUser = await User.findOne({
             email
         });
-
         if(!fetchedUser) {
             throw new Error("Invalid Creds!");
         }
