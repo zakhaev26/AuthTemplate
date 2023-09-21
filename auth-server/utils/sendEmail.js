@@ -12,7 +12,7 @@ console.log(process.env.AUTH_PASSWORD)
 
 transporter.verify((err,success)=> {
     if(err) console.log(err);
-    else console.log(success);
+    else console.log("transporter = ",success);
 })
 
 async function sendEmail(mailOptions) {
